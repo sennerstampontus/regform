@@ -1,0 +1,13 @@
+#infobox {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid $secondary-text-color;
+
+    i {
+        margin-right: .5rem;
+    }
+}

@@ -1,0 +1,29 @@
+@import url("https://use.typekit.net/gwg6zdy.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+//Fonts
+$primary-font: 'bree', sans-serif;
+$secondary-font: 'roboto', sans-serif;
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+$bold: 700;
+//
+
+//Colors
+$primary-text-color: #d0d2d6;
+$secondary-text-color: #57647C;
+//
+
+//Breakpoints
+$breakpoint-mobile: 375px;
+$breakpoint-mobile-max: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-tablet-max: 720px;
+$breakpoint-tablet-ls: 1024px;
+$breakpoint-tablet-ls-max: 996px;
+$breakpoint-desktop: 1200px;
+$breakpoint-desktop-max: 1170px;
+//
+
+@import "./breakpoints";
