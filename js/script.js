@@ -12,6 +12,7 @@
     const ortInput = document.getElementById("ort")
     const passwordInput = document.getElementById("password")
     const confirmPasswordInput = document.getElementById("confirmPassword")
+    const SubmitError = document.getElementById("sendBtn-error")
 
     
 
@@ -182,8 +183,6 @@ confirmPasswordInput.addEventListener("keyup", function(e){
 let onSubmit = (e) => {
     e.preventDefault()
 
-    const checkValidate = document.querySelectorAll(".is-valid");
-    console.log(e.target.length)
     let testArray = []
 
     for (let i = 0; i < e.target.length - 1; i++) {
@@ -191,6 +190,7 @@ let onSubmit = (e) => {
         if(!e.target[i].classList.contains("is-valid")){
 
         e.target[i].classList.add("is-invalid")
+        SubmitError.innerText = "*Kontrollera fälten"
 
         }
         // console.log(e.target[i])
@@ -206,6 +206,9 @@ let onSubmit = (e) => {
 
     if(!isInvalid){
         alert('Form submitted')
-        e.default()
+        testArray.forEach((element) =>{
+            element.value=""
+            element.classList.remove("is-valid")
+        })
     }
 }
