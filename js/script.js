@@ -1,6 +1,6 @@
 //Set variable for Element ID
+    const form = document.getElementById("form");
     const firstName = document.getElementById("firstName");
-    const errorFirstName = document.getElementById("firstName-error");
     const lastName = document.getElementById("lastName");
     const emailInput = document.getElementById("email");
     const sendButton = document.getElementById("sendBtn");
@@ -10,7 +10,9 @@
     const rowInput = document.getElementById("row")
     const pnrInput = document.getElementById("pnr")
     const ortInput = document.getElementById("ort")
-    const passwordInput = document.getElementById("")
+    const passwordInput = document.getElementById("password")
+    const confirmPasswordInput = document.getElementById("confirmPassword")
+
     
 
 //Time var
@@ -30,28 +32,27 @@
     return ageFromYear
 }
 
-let calcMonth = (thisMonth, inputMonth) => {
+console.log(fullYear)
 
-    if(inputMonth > thisMonth) {
+let confirmPassword =(thisPass, thatPass) => {
+    if (thisPass === thatPass){
         return true
     }
-
-    
-return false
+    else{
+        return false
+    }
+        
 }
-
-console.log(fullYear)
 
 // Check var
 let check = false
 
 
 
-function validate(e, description, regEx, checkAge, inputMonth) {
+function validate(e, description, regEx, checkAge) {
 
     const error = document.getElementById(`${e.target.id}-error`);
     const isValid = document.getElementById(`${e.target.id}`);
-    let currentMonth = calcMonth (month, e.target.value)
 
     if(regEx) {
         // check = true
@@ -64,24 +65,21 @@ function validate(e, description, regEx, checkAge, inputMonth) {
 
 else {
         // check = false
+        isValid.classList.remove("is-valid")
         isValid.classList.add("is-invalid")
         error.innerText =`${description}`
+
     }
 
     
-    if (checkAge <= 18){
-        console.log(checkAge)
-        currentMonth = calcMonth(month, inputMonth)
-
-        if(!currentMonth){
-            // console.log(inputMonth)
-        }
-    }
-    // else
-    //     console.log(checkAge)
-
+    if (checkAge < 18 || !regEx){
+        isValid.classList.add("is-invalid")
 }
-
+    else{
+        isValid.classList.remove("is-invalid")
+        isValid.classList.add("is-valid")
+    }
+}
 
 //Call functions through eventListener
 
@@ -114,10 +112,9 @@ monthInput.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Månad måste bestå av ${minLength} siffror`
     const numberRegEx = /(\d{2})/.exec(`${e.target.value}`);
-    let currentMonth = calcMonth (year, monthInput.value)
 
 
-    validate(e, description, numberRegEx, currentAge, currentMonth)
+    validate(e, description, numberRegEx)
 })
 
 dayInput.addEventListener("keyup", function(e){
@@ -166,7 +163,7 @@ emailInput.addEventListener("keyup", function(e){
 
 passwordInput.addEventListener("keyup", function(e){
     
-    const description = `Ange en gilltig e-postaddress`
+    const description = `Ange ett gilltigt lösenord`
     const passRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.exec(`${e.target.value}`);
 
     
@@ -174,10 +171,41 @@ passwordInput.addEventListener("keyup", function(e){
 })
 
 confirmPasswordInput.addEventListener("keyup", function(e){
-    
-    const description = `Ange en gilltig e-postaddress`
-    const passRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.exec(`${e.target.value}`);
+    let checkPass = confirmPassword(passwordInput.value, `${e.target.value}`)
+    const description = `Lösenordet måste stämma överens`
+    checkPass = confirmPassword(passwordInput.value, confirmPasswordInput.value)
 
     
-    validate(e, description, passRegEx)
+    validate(e, description, checkPass)
 })
+
+let onSubmit = (e) => {
+    e.preventDefault()
+
+    const checkValidate = document.querySelectorAll(".is-valid");
+    console.log(e.target.length)
+    let testArray = []
+
+    for (let i = 0; i < e.target.length - 1; i++) {
+        testArray.push(e.target[i])
+        if(!e.target[i].classList.contains("is-valid")){
+
+        e.target[i].classList.add("is-invalid")
+
+        }
+        // console.log(e.target[i])
+    }
+  let checkArray =  testArray.map((element)=>{
+      
+      return (element.classList.contains("is-invalid"))
+
+    })
+    console.log(checkArray)
+    // checkArray.includes(false)
+    let isInvalid = checkArray.includes(true)
+
+    if(!isInvalid){
+        alert('Form submitted')
+        e.default()
+    }
+}
