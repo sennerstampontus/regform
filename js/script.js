@@ -45,10 +45,6 @@ let confirmPassword =(thisPass, thatPass) => {
         
 }
 
-// Check var
-let check = false
-
-
 
 function validate(e, description, regEx, checkAge) {
 
@@ -56,16 +52,15 @@ function validate(e, description, regEx, checkAge) {
     const isValid = document.getElementById(`${e.target.id}`);
 
     if(regEx) {
-        // check = true
+
         isValid.classList.add("is-valid")
         isValid.classList.remove("is-invalid")
         error.innerText = ""
 
-        // console.log(yearInput.value)
+
     }
 
 else {
-        // check = false
         isValid.classList.remove("is-valid")
         isValid.classList.add("is-invalid")
         error.innerText =`${description}`
@@ -183,10 +178,10 @@ confirmPasswordInput.addEventListener("keyup", function(e){
 let onSubmit = (e) => {
     e.preventDefault()
 
-    let testArray = []
+    let fieldArray = []
 
     for (let i = 0; i < e.target.length - 1; i++) {
-        testArray.push(e.target[i])
+        fieldArray.push(e.target[i])
         if(!e.target[i].classList.contains("is-valid")){
 
         e.target[i].classList.add("is-invalid")
@@ -195,7 +190,7 @@ let onSubmit = (e) => {
         }
         // console.log(e.target[i])
     }
-  let checkArray =  testArray.map((element)=>{
+  let checkArray =  fieldArray.map((element)=>{
       
       return (element.classList.contains("is-invalid"))
 
@@ -206,9 +201,10 @@ let onSubmit = (e) => {
 
     if(!isInvalid){
         alert('Form submitted')
-        testArray.forEach((element) =>{
+        fieldArray.forEach((element) =>{
             element.value=""
             element.classList.remove("is-valid")
+            SubmitError.innerText = ""
         })
     }
 }
