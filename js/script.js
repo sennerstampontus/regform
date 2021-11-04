@@ -22,18 +22,21 @@
     let month = (today.getMonth()+1)
     let year = today.getFullYear()
 
+
 //Age validation var
     let currentAge
     let currentMonth
     let fullYear = `${year} ${month} ${date}`
 
-    let calcYear = (thisYear, inputYear) => {
-        let ageFromYear = thisYear - inputYear
+//     let calcYear = (thisYear, inputYear, monthInput) => {
+//         let ageFromYear = thisYear - inputYear
+//         console.log(ageFromYear)
+//     return ageFromYear
+// }
 
-    return ageFromYear
-}
 
-console.log(fullYear)
+
+// console.log(fullYear)
 
 let confirmPassword =(thisPass, thatPass) => {
     if (thisPass === thatPass){
@@ -46,7 +49,7 @@ let confirmPassword =(thisPass, thatPass) => {
 }
 
 
-function validate(e, description, regEx, checkAge) {
+function validate(e, description, regEx) {
 
     const error = document.getElementById(`${e.target.id}-error`);
     const isValid = document.getElementById(`${e.target.id}`);
@@ -60,36 +63,25 @@ function validate(e, description, regEx, checkAge) {
 
     }
 
-else {
+    else {
         isValid.classList.remove("is-valid")
         isValid.classList.add("is-invalid")
         error.innerText =`${description}`
 
     }
-
-    
-    if (checkAge < 18 || !regEx){
-        isValid.classList.add("is-invalid")
 }
-    else{
-        isValid.classList.remove("is-invalid")
-        isValid.classList.add("is-valid")
-    }
-}
-
-//Call functions through eventListener
 
 firstName.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Förnamnet måste vara minst ${minLength} bokstäver`
-    const letterRegEx = /[a-ö]{2,}/.exec(`${e.target.value}`);
+    const letterRegEx = /[a-ö]{2,}/i.exec(`${e.target.value}`);
     
     validate(e, description, letterRegEx)
 })
 lastName.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Efternamnet måste vara minst ${minLength} bokstäver`
-    const letterRegEx = /[a-ö]{2,}/.exec(`${e.target.value}`);
+    const letterRegEx = /[a-ö]{2,}$/i.exec(`${e.target.value}`);
     
     validate(e, description, letterRegEx)
 })
@@ -97,9 +89,10 @@ lastName.addEventListener("keyup", function(e){
 yearInput.addEventListener("keyup", function(e){
     let minLength = 4
     const description = `Årtalet måste bestå av ${minLength} siffror`
-    const numberRegEx = /(\d{4})/.exec(`${e.target.value}`);
+    const numberRegEx = /^[\d]{4}$/.exec(`${e.target.value}`);
+
     
-    let currentAge = calcYear (year, e.target.value)
+    // let currentAge = calcYear (year, e.target.value)
 
     validate(e, description, numberRegEx, currentAge)
 })
@@ -107,24 +100,23 @@ yearInput.addEventListener("keyup", function(e){
 monthInput.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Månad måste bestå av ${minLength} siffror`
-    const numberRegEx = /(\d{2})/.exec(`${e.target.value}`);
-
-
+    const numberRegEx = /^[\d]{2}$/.exec(`${e.target.value}`);
     validate(e, description, numberRegEx)
 })
 
 dayInput.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Dag måste bestå av ${minLength} siffror`
-    const numberRegEx = /(\d{2})/.exec(`${e.target.value}`);
+    const numberRegEx = /^[\d]{2}$/.exec(`${e.target.value}`);
     
     validate(e, description, numberRegEx)
+
 })
 
 rowInput.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Gatan måste bestå av minst ${minLength} tecken`
-    const letterRegEx = /[a-ö]{2,}/.exec(`${e.target.value}`);
+    const letterRegEx = /[a-ö]{2,}/i.exec(`${e.target.value}`);
 
     
     validate(e, description, letterRegEx)
@@ -133,7 +125,7 @@ rowInput.addEventListener("keyup", function(e){
 pnrInput.addEventListener("keyup", function(e){
     let minLength = 5
     const description = `Gatan måste bestå av ${minLength} siffror`
-    const numberRegEx = /(\d{5})/.exec(`${e.target.value}`);
+    const numberRegEx = /^[\d]{5}$/.exec(`${e.target.value}`);
 
     
     validate(e, description, numberRegEx)
@@ -142,7 +134,7 @@ pnrInput.addEventListener("keyup", function(e){
 ortInput.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Ort måste bestå av minst ${minLength} bokstäver`
-    const letterRegEx = /[a-ö]{2,}/.exec(`${e.target.value}`);
+    const letterRegEx = /[a-ö]{2,}/i.exec(`${e.target.value}`);
 
     
     validate(e, description, letterRegEx)
@@ -151,7 +143,7 @@ ortInput.addEventListener("keyup", function(e){
 emailInput.addEventListener("keyup", function(e){
     
     const description = `Ange en gilltig e-postaddress`
-    const emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.exec(`${e.target.value}`);
+    const emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.exec(`${e.target.value}`);
 
     
     validate(e, description, emailRegEx)
@@ -175,6 +167,9 @@ confirmPasswordInput.addEventListener("keyup", function(e){
     validate(e, description, checkPass)
 })
 
+
+
+
 let onSubmit = (e) => {
     e.preventDefault()
 
@@ -186,25 +181,132 @@ let onSubmit = (e) => {
 
         e.target[i].classList.add("is-invalid")
         SubmitError.innerText = "*Kontrollera fälten"
-
+            
         }
-        // console.log(e.target[i])
+        else
+        SubmitError.innerText = ""
+        
     }
-  let checkArray =  fieldArray.map((element)=>{
-      
+    
+    let calcMyYear = (thisYear, myInputYear) => {
+
+        let errorYear = document.getElementById(`year`);
+
+        let myYear = thisYear - myInputYear
+        if(myInputYear === ""){
+            fieldArray[2].element.classList.add("is-invalid")
+           
+        }
+        return myYear
+    }
+
+
+    let calcMyMonth = (thisMonth, myInputMonth) => {
+
+            let exactMonth  = 1
+            let underMonth  = 2
+            let overMonth   = 3
+
+            if(myInputMonth == thisMonth){
+                return exactMonth
+            }
+
+            else if(myInputMonth > thisMonth){
+                return overMonth
+            }
+
+            else
+                return underMonth
+        }
+
+    
+
+    let calcMyDate = (thisDate, myInputDate) => {
+
+        if(myInputDate <= thisDate){
+            return true
+        }
+        
+        else
+            return false
+    }
+
+
+    let validateMyAge = () => {
+
+        let myCalcYear = calcMyYear(year, fieldArray[2].value)
+        
+        if(myCalcYear === 18){
+            let myCalcMonth = calcMyMonth(month, fieldArray[3].value)
+            
+            if(myCalcMonth === 1){
+                
+                let myCalcDate = calcMyDate(date, fieldArray[4].value)
+
+                if(myCalcDate){
+                    fieldArray[4].classList.replace("is-invalid", "is-valid")
+                    document.getElementById("day-error").innerText = "";
+                }
+                else {
+                    document.getElementById("day-error").innerText = 'Du måste vara över 18 år';
+                    fieldArray[4].classList.replace("is-valid", "is-invalid")
+                }
+            }
+            else if(myCalcMonth === 3){
+                document.getElementById("month-error").innerText = 'Du måste vara över 18 år';
+                fieldArray[3].classList.replace("is-valid", "is-invalid")
+            }
+
+            else if(myCalcMonth === 2){
+                fieldArray[3].classList.replace("is-invalid", "is-valid")
+                fieldArray[4].classList.replace("is-invalid", "is-valid")
+                }
+                
+        }
+           
+        
+        
+        else if (myCalcYear < 18){
+            document.getElementById("year-error").innerText = 'Du måste vara över 18 år';
+            fieldArray[2].classList.replace("is-valid", "is-invalid")
+        }
+
+        else {
+            fieldArray[2].classList.add("is-valid")
+            fieldArray[3].classList.add("is-valid")
+            fieldArray[4].classList.add("is-valid")
+
+            fieldArray[2].classList.remove("is-invalid")
+            fieldArray[3].classList.remove("is-invalid")
+            fieldArray[4].classList.remove("is-invalid")
+        }
+         
+    }
+
+    validateMyAge()
+
+    let checkArray =  fieldArray.map((element)=>{
+    
       return (element.classList.contains("is-invalid"))
 
     })
-    console.log(checkArray)
-    // checkArray.includes(false)
-    let isInvalid = checkArray.includes(true)
 
+    let isInvalid = checkArray.includes(true)
+    
     if(!isInvalid){
-        alert('Form submitted')
-        fieldArray.forEach((element) =>{
-            element.value=""
-            element.classList.remove("is-valid")
-            SubmitError.innerText = ""
+        document.getElementById("day-error").innerText = "";
+        document.getElementById("month-error").innerText = "";
+        document.getElementById("year-error").innerText = "";
+        
+        setTimeout(function(){
+
+            alert('Form submitted')
+            fieldArray.forEach((element) =>{
+                element.value=""
+                element.classList.remove("is-valid")
+                SubmitError.innerText = ""
         })
+
+        }, 1000)
     }
 }
