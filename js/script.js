@@ -28,15 +28,6 @@
     let currentMonth
     let fullYear = `${year} ${month} ${date}`
 
-//     let calcYear = (thisYear, inputYear, monthInput) => {
-//         let ageFromYear = thisYear - inputYear
-//         console.log(ageFromYear)
-//     return ageFromYear
-// }
-
-
-
-// console.log(fullYear)
 
 let confirmPassword =(thisPass, thatPass) => {
     if (thisPass === thatPass){
@@ -48,7 +39,7 @@ let confirmPassword =(thisPass, thatPass) => {
         
 }
 
-
+// Main funciton for validation
 function validate(e, description, regEx) {
 
     const error = document.getElementById(`${e.target.id}-error`);
@@ -59,18 +50,17 @@ function validate(e, description, regEx) {
         isValid.classList.add("is-valid")
         isValid.classList.remove("is-invalid")
         error.innerText = ""
-
-
     }
 
     else {
         isValid.classList.remove("is-valid")
         isValid.classList.add("is-invalid")
         error.innerText =`${description}`
-
     }
 }
 
+
+//Event Listener for inputs
 firstName.addEventListener("keyup", function(e){
     let minLength = 2
     const description = `Förnamnet måste vara minst ${minLength} bokstäver`
@@ -169,7 +159,7 @@ confirmPasswordInput.addEventListener("keyup", function(e){
 
 
 
-
+//Confirm validation onSubmit
 let onSubmit = (e) => {
     e.preventDefault()
 
@@ -185,7 +175,6 @@ let onSubmit = (e) => {
         }
         else
         SubmitError.innerText = ""
-        
     }
     
     let calcMyYear = (thisYear, myInputYear) => {
@@ -219,8 +208,6 @@ let onSubmit = (e) => {
                 return underMonth
         }
 
-    
-
     let calcMyDate = (thisDate, myInputDate) => {
 
         if(myInputDate <= thisDate){
@@ -230,7 +217,6 @@ let onSubmit = (e) => {
         else
             return false
     }
-
 
     let validateMyAge = () => {
 
@@ -260,12 +246,9 @@ let onSubmit = (e) => {
             else if(myCalcMonth === 2){
                 fieldArray[3].classList.replace("is-invalid", "is-valid")
                 fieldArray[4].classList.replace("is-invalid", "is-valid")
-                }
-                
+                }    
         }
            
-        
-        
         else if (myCalcYear < 18){
             document.getElementById("year-error").innerText = 'Du måste vara över 18 år';
             fieldArray[2].classList.replace("is-valid", "is-invalid")
@@ -306,7 +289,6 @@ let onSubmit = (e) => {
                 element.classList.remove("is-valid")
                 SubmitError.innerText = ""
         })
-
         }, 1000)
     }
 }
