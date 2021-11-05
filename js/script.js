@@ -285,10 +285,10 @@ let onSubmit = (e) => {
 
             alert('Form submitted')
             fieldArray.forEach((element) =>{
-                element.value=""
+                element.value = ""
                 element.classList.remove("is-valid")
                 SubmitError.innerText = ""
         })
-        }, 1000)
+        }, 500)
     }
 }
